@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://clinicaraujozamboni.com.br/sitemap.xml
