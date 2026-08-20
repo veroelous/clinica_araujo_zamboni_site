@@ -543,7 +543,7 @@ function ginecologiaPage() {
           <div>
             <span>Dra. Luciane Zamboni</span>
             <strong>Ginecologia e saúde da mulher</strong>
-            <small>Atendimento na Clínica Araújo Zamboni</small>
+            <small>CRM-SP 76148</small>
           </div>
         </div>
       </section>
