@@ -98,6 +98,9 @@ svg {
 }
 
 .specialties-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -1025,6 +1028,8 @@ details p {
   }
 
   .specialties-toggle {
+    -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     justify-content: space-between;
     padding: 12px 14px;
@@ -1046,6 +1051,11 @@ details p {
     background: transparent;
     box-shadow: none;
     gap: 8px;
+  }
+
+  .site-header .specialties-menu a {
+    padding-left: 26px;
+    border-left: 3px solid rgba(200, 161, 90, 0.65);
   }
 
   .site-header nav a {
