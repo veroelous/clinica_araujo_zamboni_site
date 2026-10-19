@@ -5,6 +5,10 @@ const routes = {
   mastologia: "/mastologia/",
   ginecologia: "/ginecologia/",
   radio: "/radiofrequencia-ginecologica/",
+  dermatologia: "/dermatologia/",
+  endocrinologia: "/endocrinologia/",
+  nutricao: "/nutricao/",
+  psicologia: "/psicologia/",
   privacy: "/politica-de-privacidade/",
   terms: "/termos-de-uso/",
 };
@@ -25,6 +29,14 @@ const messages = {
     "Olá, gostaria de informações para agendar uma consulta de mastologia com o Dr. Bruno Goia na Clínica Araújo Zamboni.",
   radio:
     "Olá, gostaria de informações para agendar uma avaliação sobre radiofrequência ginecológica na Clínica Araújo Zamboni.",
+  dermatologia:
+    "Olá, gostaria de informações para agendar um atendimento de dermatologia na Clínica Araújo Zamboni.",
+  endocrinologia:
+    "Olá, gostaria de informações para agendar um atendimento de endocrinologia na Clínica Araújo Zamboni.",
+  nutricao:
+    "Olá, gostaria de informações para agendar um atendimento de nutrição na Clínica Araújo Zamboni.",
+  psicologia:
+    "Olá, gostaria de informações para agendar um atendimento de psicologia na Clínica Araújo Zamboni.",
 };
 
 const wa = (key) => WPP + encodeURIComponent(messages[key] || messages.agendar);
@@ -85,6 +97,37 @@ const services = [
     intent: "recepcao",
   },
 ];
+
+const specialtyPages = {
+  dermatologia: {
+    name: "Dermatologia",
+    professional: "Dermatologista",
+    title: "Dermatologista em Caçapava | Clínica Araújo Zamboni",
+    description:
+      "Atendimento especializado em dermatologia na Clínica Araújo Zamboni, em Caçapava/SP, com cuidado individualizado. Agende pelo WhatsApp.",
+  },
+  endocrinologia: {
+    name: "Endocrinologia",
+    professional: "Endocrinologista",
+    title: "Endocrinologista em Caçapava | Clínica Araújo Zamboni",
+    description:
+      "Atendimento especializado em endocrinologia na Clínica Araújo Zamboni, em Caçapava/SP, com cuidado individualizado. Agende pelo WhatsApp.",
+  },
+  nutricao: {
+    name: "Nutrição",
+    professional: "Nutricionista",
+    title: "Nutricionista em Caçapava | Clínica Araújo Zamboni",
+    description:
+      "Atendimento especializado em nutrição na Clínica Araújo Zamboni, em Caçapava/SP, com orientação individualizada. Agende pelo WhatsApp.",
+  },
+  psicologia: {
+    name: "Psicologia",
+    professional: "Psicólogo",
+    title: "Psicólogo em Caçapava | Clínica Araújo Zamboni",
+    description:
+      "Atendimento especializado em psicologia na Clínica Araújo Zamboni, em Caçapava/SP, com acolhimento e escuta individualizada. Agende pelo WhatsApp.",
+  },
+};
 
 const decisionCards = [
   {
@@ -258,8 +301,12 @@ function header(active = "home") {
         <a class="${active === "mastologia" ? "is-active" : ""}" href="${routes.mastologia}">Mastologia</a>
         <a class="${active === "ginecologia" ? "is-active" : ""}" href="${routes.ginecologia}">Ginecologia</a>
         <a class="${active === "radio" ? "is-active" : ""}" href="${routes.radio}">Radiofrequência Ginecológica</a>
+        <a class="${active === "dermatologia" ? "is-active" : ""}" href="${routes.dermatologia}">Dermatologia</a>
+        <a class="${active === "endocrinologia" ? "is-active" : ""}" href="${routes.endocrinologia}">Endocrinologia</a>
+        <a class="${active === "nutricao" ? "is-active" : ""}" href="${routes.nutricao}">Nutrição</a>
+        <a class="${active === "psicologia" ? "is-active" : ""}" href="${routes.psicologia}">Psicologia</a>
       </nav>
-      <a class="header-cta" href="${wa(active === "mastologia" ? "mastologia" : active === "ginecologia" ? "ginecologia" : active === "radio" ? "radio" : "agendar")}" target="_blank" rel="noopener">${icon("whatsapp")} Agendar</a>
+      <a class="header-cta" href="${wa(messages[active] ? active : "agendar")}" target="_blank" rel="noopener">${icon("whatsapp")} Agendar</a>
     </header>
   `;
 }
@@ -764,6 +811,145 @@ function radioPage() {
   `, "radio");
 }
 
+function setPageMeta(title, description, path) {
+  document.title = title;
+  document.querySelector('meta[name="description"]')?.setAttribute("content", description);
+  document.querySelector('link[rel="canonical"]')?.setAttribute(
+    "href",
+    `https://clinicaraujozamboni.com.br${path}`
+  );
+  document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
+}
+
+function genericSpecialtyPage(key) {
+  const specialty = specialtyPages[key];
+  const path = routes[key];
+  setPageMeta(specialty.title, specialty.description, path);
+
+  const related = Object.entries(specialtyPages)
+    .filter(([relatedKey]) => relatedKey !== key)
+    .slice(0, 2);
+
+  const faq = [
+    [
+      `Como agendar um atendimento de ${specialty.name.toLowerCase()}?`,
+      `Fale com a recepção pelo WhatsApp para consultar disponibilidade e receber as orientações para o agendamento de ${specialty.name.toLowerCase()} em Caçapava/SP.`,
+    ],
+    [
+      "O atendimento é individualizado?",
+      "Sim. O atendimento considera as necessidades de cada paciente, com escuta, cuidado e orientação profissional responsável.",
+    ],
+    [
+      "Como confirmar horários e convênios?",
+      "A recepção informa os horários disponíveis, as formas de atendimento e os convênios aceitos antes do agendamento.",
+    ],
+    [
+      "Posso falar com a clínica antes de agendar?",
+      "Sim. O WhatsApp da recepção está disponível para orientar sobre o atendimento e esclarecer dúvidas administrativas.",
+    ],
+  ];
+
+  return pageShell(`
+    ${header(key)}
+    <main id="top">
+      <section class="specialty-hero generic-specialty-hero">
+        <div class="specialty-copy">
+          <div class="eyebrow">${icon("pin")} ${specialty.professional} em Caçapava/SP</div>
+          <h1>${specialty.name}</h1>
+          <p>
+            Atendimento especializado em ${specialty.name.toLowerCase()} na Clínica Araújo Zamboni, com escuta, cuidado individualizado e orientação responsável em cada etapa.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="${wa(key)}" target="_blank" rel="noopener">${icon("whatsapp")} Agendar pelo WhatsApp</a>
+            <a class="secondary-action" href="#atendimento">Conheça o atendimento</a>
+          </div>
+        </div>
+        <div class="doctor-panel generic-specialty-panel">
+          <img class="wide-doctor-photo" src="/assets/caz-home-medical.webp" alt="Atendimento especializado na Clínica Araújo Zamboni em Caçapava" />
+          <div>
+            <span>Atendimento especializado</span>
+            <strong>Clínica Araújo Zamboni</strong>
+            <small>Caçapava/SP</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="section split" id="atendimento">
+        <div class="copy-block reveal">
+          <span class="section-kicker">${specialty.name} em Caçapava</span>
+          <h2>Cuidado profissional com atenção às necessidades de cada paciente</h2>
+          <p>
+            A Clínica Araújo Zamboni oferece atendimento especializado em ${specialty.name.toLowerCase()} em um ambiente preparado para receber cada paciente com sobriedade, confiança e humanidade.
+          </p>
+          <p>
+            A consulta é conduzida de forma individualizada. A recepção pode confirmar as informações sobre o profissional responsável, disponibilidade e orientações para o atendimento.
+          </p>
+        </div>
+        <div class="journey reveal">
+          <div><b>01</b><strong>Fale com a recepção</strong><span>Entre em contato pelo WhatsApp e informe a especialidade desejada.</span></div>
+          <div><b>02</b><strong>Consulte a disponibilidade</strong><span>Confirme horários, formas de atendimento e convênios.</span></div>
+          <div><b>03</b><strong>Receba as orientações</strong><span>A equipe informa o que você precisa saber antes da consulta.</span></div>
+          <div><b>04</b><strong>Agende seu atendimento</strong><span>Escolha o melhor horário disponível com a recepção.</span></div>
+        </div>
+      </section>
+
+      <section class="section services generic-specialty-care">
+        <div class="section-head reveal">
+          <span class="section-kicker">Atendimento especializado</span>
+          <h2>Um cuidado baseado em escuta, clareza e responsabilidade</h2>
+          <p>O atendimento busca compreender cada pessoa de forma individual, com orientação adequada ao contexto apresentado em consulta.</p>
+        </div>
+        <div class="service-grid">
+          ${[
+            ["Escuta atenta", "Tempo e atenção para compreender as necessidades apresentadas por cada paciente."],
+            ["Atendimento individualizado", "Cuidado conduzido de acordo com o contexto e as necessidades de cada pessoa."],
+            ["Orientação clara", "Informações apresentadas de forma responsável e compreensível durante o atendimento."],
+            ["Cuidado humanizado", "Acolhimento com respeito, discrição e atenção em todas as etapas da consulta."],
+            ["Acompanhamento responsável", "Os próximos passos são orientados pelo profissional conforme a avaliação individual."],
+            ["Integração do cuidado", "Quando necessário, a clínica facilita o contato com outras especialidades disponíveis."],
+          ].map(([title, copy], index) => `
+            <article class="service-card reveal" style="--d:${index * 70}ms">
+              <span class="service-kicker">${specialty.name}</span>
+              <h3>${title}</h3>
+              <p>${copy}</p>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="feature-band">
+        <div class="feature-copy reveal">
+          <span class="section-kicker light">Clínica Araújo Zamboni</span>
+          <h2>Atendimento com confiança, humanidade e atenção individual</h2>
+          <p>Desde o primeiro contato, a equipe busca oferecer orientação clara para que o paciente compreenda como funciona o atendimento e possa agendar com tranquilidade.</p>
+        </div>
+        <div class="feature-list reveal">
+          <div>${icon("care")} Atendimento especializado e individualizado</div>
+          <div>${icon("search")} Informações claras antes da consulta</div>
+          <div>${icon("whatsapp")} Agendamento direto com a recepção</div>
+        </div>
+      </section>
+
+      <section class="section related-section">
+        <div class="section-head reveal">
+          <span class="section-kicker">Outras especialidades</span>
+          <h2>Conheça outros atendimentos da clínica</h2>
+          <p>A Clínica Araújo Zamboni reúne diferentes especialidades para facilitar o acesso do paciente ao cuidado de que precisa.</p>
+        </div>
+        <div class="related-grid">
+          ${related.map(([relatedKey, item]) => relatedCard(`${item.name} em Caçapava`, "Atendimento especializado, individualizado e com orientação responsável.", routes[relatedKey], `Ver ${item.name.toLowerCase()}`)).join("")}
+          ${relatedCard("Clínica médica em Caçapava", "Conheça a estrutura da Clínica Araújo Zamboni e as especialidades disponíveis.", routes.home, "Voltar para Home")}
+        </div>
+      </section>
+
+      ${faqSection(faq, `Dúvidas sobre ${specialty.name.toLowerCase()}`, "Informações antes de agendar seu atendimento", `Respostas objetivas para quem procura ${specialty.name.toLowerCase()} em Caçapava/SP.`)}
+      ${locationSection()}
+      ${finalCta(`Agende seu atendimento de ${specialty.name.toLowerCase()}`, `Fale com a recepção da Clínica Araújo Zamboni para consultar disponibilidade e agendar atendimento especializado em ${specialty.name.toLowerCase()} em Caçapava/SP.`, key)}
+    </main>
+  `, key);
+}
+
 function locationSection() {
   return `
     <section class="section local-seo" id="localizacao">
@@ -1025,6 +1211,14 @@ function boot() {
     app.innerHTML = ginecologiaPage();
   } else if (path === routes.radio) {
     app.innerHTML = radioPage();
+  } else if (path === routes.dermatologia) {
+    app.innerHTML = genericSpecialtyPage("dermatologia");
+  } else if (path === routes.endocrinologia) {
+    app.innerHTML = genericSpecialtyPage("endocrinologia");
+  } else if (path === routes.nutricao) {
+    app.innerHTML = genericSpecialtyPage("nutricao");
+  } else if (path === routes.psicologia) {
+    app.innerHTML = genericSpecialtyPage("psicologia");
   } else if (path === routes.privacy) {
     app.innerHTML = privacyPage();
   } else if (path === routes.terms) {
