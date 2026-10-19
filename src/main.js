@@ -298,13 +298,20 @@ function header(active = "home") {
       </button>
       <nav id="primary-navigation" aria-label="Navegação principal">
         <a class="${active === "home" ? "is-active" : ""}" href="${routes.home}">Home</a>
-        <a class="${active === "mastologia" ? "is-active" : ""}" href="${routes.mastologia}">Mastologia</a>
-        <a class="${active === "ginecologia" ? "is-active" : ""}" href="${routes.ginecologia}">Ginecologia</a>
-        <a class="${active === "radio" ? "is-active" : ""}" href="${routes.radio}">Radiofrequência Ginecológica</a>
-        <a class="${active === "dermatologia" ? "is-active" : ""}" href="${routes.dermatologia}">Dermatologia</a>
-        <a class="${active === "endocrinologia" ? "is-active" : ""}" href="${routes.endocrinologia}">Endocrinologia</a>
-        <a class="${active === "nutricao" ? "is-active" : ""}" href="${routes.nutricao}">Nutrição</a>
-        <a class="${active === "psicologia" ? "is-active" : ""}" href="${routes.psicologia}">Psicologia</a>
+        <div class="nav-dropdown ${active === "home" ? "" : "has-active"}">
+          <button class="specialties-toggle" type="button" aria-expanded="false" aria-controls="specialties-menu">
+            Especialidades <span aria-hidden="true">⌄</span>
+          </button>
+          <div class="specialties-menu" id="specialties-menu" aria-label="Especialidades médicas">
+            <a class="${active === "mastologia" ? "is-active" : ""}" href="${routes.mastologia}">Mastologia</a>
+            <a class="${active === "ginecologia" ? "is-active" : ""}" href="${routes.ginecologia}">Ginecologia</a>
+            <a class="${active === "radio" ? "is-active" : ""}" href="${routes.radio}">Radiofrequência Ginecológica</a>
+            <a class="${active === "dermatologia" ? "is-active" : ""}" href="${routes.dermatologia}">Dermatologia</a>
+            <a class="${active === "endocrinologia" ? "is-active" : ""}" href="${routes.endocrinologia}">Endocrinologia</a>
+            <a class="${active === "nutricao" ? "is-active" : ""}" href="${routes.nutricao}">Nutrição</a>
+            <a class="${active === "psicologia" ? "is-active" : ""}" href="${routes.psicologia}">Psicologia</a>
+          </div>
+        </div>
       </nav>
       <a class="header-cta" href="${wa(messages[active] ? active : "agendar")}" target="_blank" rel="noopener">${icon("whatsapp")} Agendar</a>
     </header>
@@ -1178,27 +1185,48 @@ function initMobileMenu() {
   const header = document.querySelector(".site-header");
   const button = document.querySelector(".menu-toggle");
   const nav = document.querySelector("#primary-navigation");
-  if (!header || !button || !nav) return;
+  const dropdown = nav?.querySelector(".nav-dropdown");
+  const specialtiesToggle = nav?.querySelector(".specialties-toggle");
+  if (!header || !button || !nav || !dropdown || !specialtiesToggle) return;
+
+  const setSpecialtiesOpen = (open) => {
+    dropdown.classList.toggle("is-open", open);
+    specialtiesToggle.setAttribute("aria-expanded", String(open));
+  };
 
   const setOpen = (open) => {
     header.classList.toggle("menu-open", open);
     button.setAttribute("aria-expanded", String(open));
+    if (!open) setSpecialtiesOpen(false);
   };
 
   button.addEventListener("click", () => {
     setOpen(!header.classList.contains("menu-open"));
   });
 
+  specialtiesToggle.addEventListener("click", () => {
+    setSpecialtiesOpen(!dropdown.classList.contains("is-open"));
+  });
+
   nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => setOpen(false));
+    link.addEventListener("click", () => {
+      setSpecialtiesOpen(false);
+      setOpen(false);
+    });
   });
 
   document.addEventListener("click", (event) => {
-    if (!header.contains(event.target)) setOpen(false);
+    if (!header.contains(event.target)) {
+      setOpen(false);
+      setSpecialtiesOpen(false);
+    }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setOpen(false);
+    if (event.key === "Escape") {
+      setOpen(false);
+      setSpecialtiesOpen(false);
+    }
   });
 }
 
