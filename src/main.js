@@ -285,6 +285,7 @@ function icon(name) {
 }
 
 function header(active = "home") {
+  const specialtyPages = ["mastologia", "ginecologia", "dermatologia", "endocrinologia", "nutricao", "psicologia"];
   return `
     <header class="site-header">
       <a class="brand" href="${routes.home}" aria-label="Clínica Araújo Zamboni">
@@ -298,14 +299,14 @@ function header(active = "home") {
       </button>
       <nav id="primary-navigation" aria-label="Navegação principal">
         <a class="${active === "home" ? "is-active" : ""}" href="${routes.home}">Home</a>
-        <div class="nav-dropdown ${active === "home" ? "" : "has-active"}">
+        <a class="${active === "radio" ? "is-active" : ""}" href="${routes.radio}">Radiofrequência Ginecológica</a>
+        <div class="nav-dropdown ${specialtyPages.includes(active) ? "has-active" : ""}">
           <button class="specialties-toggle" type="button" aria-expanded="false" aria-controls="specialties-menu">
             Especialidades <span aria-hidden="true">⌄</span>
           </button>
           <div class="specialties-menu" id="specialties-menu" aria-label="Especialidades médicas">
             <a class="${active === "mastologia" ? "is-active" : ""}" href="${routes.mastologia}">Mastologia</a>
             <a class="${active === "ginecologia" ? "is-active" : ""}" href="${routes.ginecologia}">Ginecologia</a>
-            <a class="${active === "radio" ? "is-active" : ""}" href="${routes.radio}">Radiofrequência Ginecológica</a>
             <a class="${active === "dermatologia" ? "is-active" : ""}" href="${routes.dermatologia}">Dermatologia</a>
             <a class="${active === "endocrinologia" ? "is-active" : ""}" href="${routes.endocrinologia}">Endocrinologia</a>
             <a class="${active === "nutricao" ? "is-active" : ""}" href="${routes.nutricao}">Nutrição</a>
