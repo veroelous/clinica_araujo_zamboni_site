@@ -1,13 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://clinicaraujozamboni.com.br/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/mastologia/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/ginecologia/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/radiofrequencia-ginecologica/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/dermatologia/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/endocrinologia/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/nutricao/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/psicologia/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/politica-de-privacidade/</loc></url>
-  <url><loc>https://clinicaraujozamboni.com.br/termos-de-uso/</loc></url>
+
+  <!-- Página inicial -->
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Especialidades principais -->
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/ginecologia/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/mastologia/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/radiofrequencia-ginecologica/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Novas especialidades adicionadas em outubro/2026 -->
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/dermatologia/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/endocrinologia/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/nutricao/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/psicologia/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Páginas institucionais -->
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/politica-de-privacidade/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://clinicaraujozamboni.com.br/termos-de-uso/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
