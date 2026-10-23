@@ -5,9 +5,7 @@ const routes = {
   mastologia: "/mastologia/",
   ginecologia: "/ginecologia/",
   radio: "/radiofrequencia-ginecologica/",
-  dermatologia: "/dermatologia/",
   endocrinologia: "/endocrinologia/",
-  nutricao: "/nutricao/",
   psicologia: "/psicologia/",
   privacy: "/politica-de-privacidade/",
   terms: "/termos-de-uso/",
@@ -29,12 +27,8 @@ const messages = {
     "Olá, gostaria de informações para agendar uma consulta de mastologia com o Dr. Bruno Goia na Clínica Araújo Zamboni.",
   radio:
     "Olá, gostaria de informações para agendar uma avaliação sobre radiofrequência ginecológica na Clínica Araújo Zamboni.",
-  dermatologia:
-    "Olá, gostaria de informações para agendar um atendimento de dermatologia na Clínica Araújo Zamboni.",
   endocrinologia:
     "Olá, gostaria de informações para agendar um atendimento de endocrinologia na Clínica Araújo Zamboni.",
-  nutricao:
-    "Olá, gostaria de informações para agendar um atendimento de nutrição na Clínica Araújo Zamboni.",
   psicologia:
     "Olá, gostaria de informações para agendar um atendimento de psicologia na Clínica Araújo Zamboni.",
 };
@@ -70,15 +64,6 @@ const services = [
     intent: "radio",
   },
   {
-    title: "Dermatologia",
-    tag: "Pele e prevenção",
-    copy:
-      "Atendimento dermatológico para avaliação da pele, orientação preventiva e acompanhamento conforme a necessidade do paciente.",
-    href: wa("recepcao"),
-    cta: "Consultar horários",
-    intent: "recepcao",
-  },
-  {
     title: "Endocrinologia",
     tag: "Hormônios e metabolismo",
     copy:
@@ -88,10 +73,10 @@ const services = [
     intent: "recepcao",
   },
   {
-    title: "Nutrição e Psicologia",
-    tag: "Cuidado complementar",
+    title: "Psicologia",
+    tag: "Saúde emocional",
     copy:
-      "Apoio profissional para rotina, qualidade de vida, saúde emocional, alimentação e acompanhamento integrado.",
+      "Apoio profissional para saúde emocional, rotina, qualidade de vida e acompanhamento integrado.",
     href: wa("recepcao"),
     cta: "Falar com a recepção",
     intent: "recepcao",
@@ -99,26 +84,12 @@ const services = [
 ];
 
 const specialtyPages = {
-  dermatologia: {
-    name: "Dermatologia",
-    professional: "Dermatologista",
-    title: "Dermatologista em Caçapava | Clínica Araújo Zamboni",
-    description:
-      "Atendimento especializado em dermatologia na Clínica Araújo Zamboni, em Caçapava/SP, com cuidado individualizado. Agende pelo WhatsApp.",
-  },
   endocrinologia: {
     name: "Endocrinologia",
     professional: "Endocrinologista",
     title: "Endocrinologista em Caçapava | Clínica Araújo Zamboni",
     description:
       "Atendimento especializado em endocrinologia na Clínica Araújo Zamboni, em Caçapava/SP, com cuidado individualizado. Agende pelo WhatsApp.",
-  },
-  nutricao: {
-    name: "Nutrição",
-    professional: "Nutricionista",
-    title: "Nutricionista em Caçapava | Clínica Araújo Zamboni",
-    description:
-      "Atendimento especializado em nutrição na Clínica Araújo Zamboni, em Caçapava/SP, com orientação individualizada. Agende pelo WhatsApp.",
   },
   psicologia: {
     name: "Psicologia",
@@ -161,7 +132,7 @@ const homeFaq = [
   ],
   [
     "Quais especialidades a clínica atende?",
-    `A Clínica Araújo Zamboni conta com atendimento em <a class="text-link" href="${routes.ginecologia}">ginecologia</a>, <a class="text-link" href="${routes.mastologia}">mastologia</a>, <a class="text-link" href="${routes.radio}">radiofrequência ginecológica</a>, dermatologia, endocrinologia, nutrição, psicologia e outras áreas da saúde.`,
+    `A Clínica Araújo Zamboni conta com atendimento em <a class="text-link" href="${routes.ginecologia}">ginecologia</a>, <a class="text-link" href="${routes.mastologia}">mastologia</a>, <a class="text-link" href="${routes.radio}">radiofrequência ginecológica</a>, endocrinologia, psicologia e outras áreas da saúde.`,
   ],
   [
     "A clínica atende saúde da mulher?",
@@ -285,7 +256,7 @@ function icon(name) {
 }
 
 function header(active = "home") {
-  const specialtyPages = ["mastologia", "ginecologia", "dermatologia", "endocrinologia", "nutricao", "psicologia"];
+  const specialtyPages = ["mastologia", "ginecologia", "endocrinologia", "psicologia"];
   return `
     <header class="site-header">
       <a class="brand" href="${routes.home}" aria-label="Clínica Araújo Zamboni">
@@ -307,9 +278,7 @@ function header(active = "home") {
           <div class="specialties-menu" id="specialties-menu" aria-label="Especialidades médicas">
             <a class="${active === "mastologia" ? "is-active" : ""}" href="${routes.mastologia}">Mastologia</a>
             <a class="${active === "ginecologia" ? "is-active" : ""}" href="${routes.ginecologia}">Ginecologia</a>
-            <a class="${active === "dermatologia" ? "is-active" : ""}" href="${routes.dermatologia}">Dermatologia</a>
             <a class="${active === "endocrinologia" ? "is-active" : ""}" href="${routes.endocrinologia}">Endocrinologia</a>
-            <a class="${active === "nutricao" ? "is-active" : ""}" href="${routes.nutricao}">Nutrição</a>
             <a class="${active === "psicologia" ? "is-active" : ""}" href="${routes.psicologia}">Psicologia</a>
           </div>
         </div>
@@ -361,7 +330,7 @@ function homePage() {
   document.title = "Clínica Médica em Caçapava | Araújo Zamboni";
   document.querySelector('meta[name="description"]')?.setAttribute(
     "content",
-    "Clínica médica em Caçapava/SP com atendimento em ginecologia, mastologia, dermatologia, endocrinologia, nutrição, psicologia e outras especialidades. Agende pelo WhatsApp."
+    "Clínica médica em Caçapava/SP com atendimento em ginecologia, mastologia, endocrinologia, psicologia e outras especialidades. Agende pelo WhatsApp."
   );
 
   return pageShell(`
@@ -375,7 +344,7 @@ function homePage() {
           <div class="eyebrow">${icon("pin")} Clínica médica em Caçapava/SP desde 1994</div>
           <h1>Clínica médica em Caçapava para cuidar da sua saúde com atenção e segurança</h1>
           <p>
-            Atendimento em <a class="text-link light" href="${routes.ginecologia}">ginecologia</a>, <a class="text-link light" href="${routes.mastologia}">mastologia</a>, dermatologia, endocrinologia, nutrição, psicologia e outras especialidades. Fale com a recepção, tire suas dúvidas e agende sua consulta pelo WhatsApp.
+            Atendimento em <a class="text-link light" href="${routes.ginecologia}">ginecologia</a>, <a class="text-link light" href="${routes.mastologia}">mastologia</a>, endocrinologia, psicologia e outras especialidades. Fale com a recepção, tire suas dúvidas e agende sua consulta pelo WhatsApp.
           </p>
           <div class="hero-actions">
             <a class="primary-action" href="${wa("agendar")}" target="_blank" rel="noopener">${icon("whatsapp")} Agendar consulta pelo WhatsApp</a>
@@ -637,7 +606,7 @@ function ginecologiaPage() {
             ["Ciclo menstrual", "Acompanhamento de alterações no ciclo menstrual, cólicas, sangramentos irregulares e sintomas associados."],
             ["Contracepção", "Orientação sobre anticoncepcional e métodos contraceptivos conforme histórico, rotina e objetivos da paciente."],
             ["Menopausa", "Acompanhamento de sintomas, saúde íntima, prevenção e qualidade de vida durante essa fase."],
-            ["Cuidado integrado", `Quando necessário, o acompanhamento pode conversar com <a class="text-link" href="${routes.mastologia}">mastologia</a>, endocrinologia, nutrição e psicologia.`]
+            ["Cuidado integrado", `Quando necessário, o acompanhamento pode conversar com <a class="text-link" href="${routes.mastologia}">mastologia</a>, endocrinologia e psicologia.`]
           ].map(([title, copy], index) => `
             <article class="service-card reveal" style="--d:${index * 70}ms">
               <span class="service-kicker">Saúde da mulher</span>
@@ -1240,12 +1209,8 @@ function boot() {
     app.innerHTML = ginecologiaPage();
   } else if (path === routes.radio) {
     app.innerHTML = radioPage();
-  } else if (path === routes.dermatologia) {
-    app.innerHTML = genericSpecialtyPage("dermatologia");
   } else if (path === routes.endocrinologia) {
     app.innerHTML = genericSpecialtyPage("endocrinologia");
-  } else if (path === routes.nutricao) {
-    app.innerHTML = genericSpecialtyPage("nutricao");
   } else if (path === routes.psicologia) {
     app.innerHTML = genericSpecialtyPage("psicologia");
   } else if (path === routes.privacy) {
